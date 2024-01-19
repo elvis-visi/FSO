@@ -1,3 +1,15 @@
+const Courses = ({ courses }) => {
+  //for each course
+
+  return (
+    <>
+      {courses.map((course) => (
+        <Course key={course.id} course={course} />
+      ))}
+    </>
+  );
+};
+
 const Course = ({ course }) => {
   const total = course.parts.reduce((acc, current, index) => {
     console.log("index, sum, current ", index, acc, current.exercises);
@@ -31,4 +43,4 @@ const Content = ({ parts }) => (
   </>
 );
 
-export default Course;
+export default Courses;
