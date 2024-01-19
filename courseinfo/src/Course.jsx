@@ -1,15 +1,14 @@
 const Course = ({ course }) => {
-  let sum = 0;
-
-  course.parts.forEach((part) => {
-    sum += part.exercises;
-  });
+  const total = course.parts.reduce((acc, current, index) => {
+    console.log("index, sum, current ", index, acc, current.exercises);
+    return acc + current.exercises;
+  }, 0);
 
   return (
     <div>
       <Header name={course.name} />
       <Content parts={course.parts} />
-      <Total sum={sum} />
+      <Total sum={total} />
     </div>
   );
 };
