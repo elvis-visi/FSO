@@ -1,71 +1,45 @@
-const Header = (props) => {
-  console.log("Header props ", props);
-  return <h1>{props.course}</h1>;
-};
+const Header = ({ course }) => <h1>{course}</h1>;
 
-//pass an array as props
-const Content = (props) => {
-  console.log("content arr: ", props);
-  return (
-    <>
-      {/* {props.part} {props.exercise} */}
+const Total = ({ sum }) => <p>Number of exercises {sum}</p>;
 
-      <Part part={props.parts[0].name} exercise={props.parts[0].exercises} />
-      <Part part={props.parts[1].name} exercise={props.parts[1].exercises} />
-      <Part part={props.parts[2].name} exercise={props.parts[2].exercises} />
-    </>
-  );
-};
+const Part = ({ part }) => (
+  <p>
+    {part.name} {part.exercises}
+  </p>
+);
 
-const Part = (props) => {
-  return (
-    <p>
-      {props.part} {props.exercise}
-    </p>
-  );
-};
-
-const Total = (props) => {
-  return (
-    <p>
-      Number of exercises{" "}
-      {props.parts[0].exercises +
-        props.parts[1].exercises +
-        props.parts[2].exercises}
-    </p>
-  );
-};
+const Content = ({ parts }) => (
+  <>
+    <Part part={parts[0]} />
+    <Part part={parts[1]} />
+    <Part part={parts[2]} />
+  </>
+);
 
 const App = () => {
-  const course = {
-    name: "Half Stack application development",
-    parts: [
-      {
-        name: "Fundamentals of React",
-        exercises: 10,
-      },
-      {
-        name: "Using props to pass data",
-        exercises: 7,
-      },
-      {
-        name: "State of a component",
-        exercises: 14,
-      },
-    ],
-  };
-
-  // const arr = [
-  //   { part1: "Fundamentals of React", exercises1: 10 },
-  //   { part2: "Using props to pass data", exercises2: 7 },
-  //   { part3: "State of a component", exercises3: 14 },
-  // ];
+  const course = "Half Stack application development";
+  const parts = [
+    {
+      name: "Fundamentals of React",
+      exercises: 10,
+    },
+    {
+      name: "Using props to pass data",
+      exercises: 7,
+    },
+    {
+      name: "State of a component",
+      exercises: 14,
+    },
+  ];
 
   return (
     <div>
-      <Header course={course.name} />
-      <Content parts={course.parts} />
-      <Total parts={course.parts} />
+      <Header course={course} />
+      <Content parts={parts} />
+      <Total
+        sum={parts[0].exercises + parts[1].exercises + parts[2].exercises}
+      />
     </div>
   );
 };
