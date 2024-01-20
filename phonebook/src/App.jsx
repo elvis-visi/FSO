@@ -9,12 +9,19 @@ const App = () => {
     event.preventDefault();
     console.log("event target  ", event.target);
 
+    //check whether the name exists in the phonebook
     const newPerson = {
       name: newName,
     };
 
-    setPersons(persons.concat(newPerson));
-    setNewName("");
+    const duplicate = persons.some((per) => per.name === newPerson.name);
+
+    if (!duplicate) {
+      setPersons(persons.concat(newPerson));
+      setNewName("");
+    } else {
+      alert(`${newPerson.name} is already in the phonebook`);
+    }
   };
 
   const handleChange = (event) => {
