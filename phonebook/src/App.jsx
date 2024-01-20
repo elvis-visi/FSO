@@ -2,8 +2,11 @@ import { useState } from "react";
 import Person from "./Person";
 
 const App = () => {
-  const [persons, setPersons] = useState([{ name: "Arto Hellas" }]);
+  const [persons, setPersons] = useState([
+    { name: "Arto Hellas", number: "040-1234567" },
+  ]);
   const [newName, setNewName] = useState("");
+  const [newNumber, setNewNumber] = useState("");
 
   const addPerson = (event) => {
     event.preventDefault();
@@ -12,6 +15,7 @@ const App = () => {
     //check whether the name exists in the phonebook
     const newPerson = {
       name: newName,
+      number: newNumber,
     };
 
     const duplicate = persons.some((per) => per.name === newPerson.name);
@@ -19,6 +23,7 @@ const App = () => {
     if (!duplicate) {
       setPersons(persons.concat(newPerson));
       setNewName("");
+      setNewNumber("");
     } else {
       alert(`${newPerson.name} is already in the phonebook`);
     }
@@ -29,12 +34,21 @@ const App = () => {
     setNewName(event.target.value);
   };
 
+  const handleChangeNumber = (event) => {
+    console.log("event target ", event.target);
+    setNewNumber(event.target.value);
+  };
+
   return (
     <div>
       <h2>Phonebook</h2>
       <form onSubmit={addPerson}>
         <div>
           name: <input value={newName} onChange={handleChange} />
+        </div>
+        <div>
+          number:
+          <input value={newNumber} onChange={handleChangeNumber} />
         </div>
         <div>
           <button type="submit">add</button>
