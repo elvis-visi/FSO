@@ -30,9 +30,13 @@ const App = () => {
     const duplicate = persons.some((per) => per.name === newPerson.name);
 
     if (!duplicate) {
-      setPersons(persons.concat(newPerson));
-      setNewName("");
-      setNewNumber("");
+      axios
+        .post(`http://localhost:3001/persons`, newPerson)
+        .then((response) => {
+          setPersons(persons.concat(response.data));
+          setNewName("");
+          setNewNumber("");
+        });
     } else {
       alert(`${newPerson.name} is already in the phonebook`);
     }
