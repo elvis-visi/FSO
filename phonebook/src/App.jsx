@@ -3,6 +3,7 @@ import axios from "axios";
 import Filter from "./Filter";
 import PersonForm from "./PersonForm";
 import Persons from "./Persons";
+import personsService from "./services/persons";
 
 const App = () => {
   const [persons, setPersons] = useState([]);
@@ -12,8 +13,8 @@ const App = () => {
 
   useEffect(() => {
     //get request to the json server
-    axios.get("http://localhost:3001/persons").then((response) => {
-      setPersons(response.data);
+    personsService.getAll().then((initialPersons) => {
+      setPersons(initialPersons);
     });
   }, []);
 
@@ -30,13 +31,11 @@ const App = () => {
     const duplicate = persons.some((per) => per.name === newPerson.name);
 
     if (!duplicate) {
-      axios
-        .post(`http://localhost:3001/persons`, newPerson)
-        .then((response) => {
-          setPersons(persons.concat(response.data));
-          setNewName("");
-          setNewNumber("");
-        });
+      personsService.create(newPerson).then((returnedPerson) => {
+        setPersons(persons.concat(returnedPerson));
+        setNewName("");
+        setNewNumber("");
+      });
     } else {
       alert(`${newPerson.name} is already in the phonebook`);
     }
