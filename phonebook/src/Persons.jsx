@@ -1,7 +1,7 @@
 //receive phonebook, display all the members
 import Person from "./Person";
 
-const Persons = ({ persons, filter }) => {
+const Persons = ({ persons, filter, handleDelete }) => {
   const phonesToShow =
     filter.length === 0
       ? persons
@@ -12,7 +12,10 @@ const Persons = ({ persons, filter }) => {
   return (
     <ul>
       {phonesToShow.map((per) => (
-        <Person key={per.name} person={per} />
+        <li key={per.id}>
+          {per.name} {per.number}
+          <button onClick={() => handleDelete(per.id)}> delete</button>
+        </li>
       ))}
     </ul>
   );
