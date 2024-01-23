@@ -1,6 +1,6 @@
 const Notification = ({ message }) => {
   const messageStyle = {
-    color: "green",
+    color: message.type === "green" ? "green" : "red",
     fontStyle: "italic",
     fontSize: 16,
     borderStyle: "solid",
@@ -10,11 +10,11 @@ const Notification = ({ message }) => {
     padding: 5,
   };
 
-  if (message === null) {
+  if (!message.type) {
     return null;
   }
 
-  return <div style={messageStyle}>{message}</div>;
+  return <div style={messageStyle}>{message.mess}</div>;
 };
 
 export default Notification;

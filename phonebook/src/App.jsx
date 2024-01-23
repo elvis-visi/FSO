@@ -10,7 +10,7 @@ const App = () => {
   const [newName, setNewName] = useState("");
   const [newNumber, setNewNumber] = useState("");
   const [filter, setNewFilter] = useState("");
-  const [message, setMessage] = useState("prove");
+  const [message, setMessage] = useState({ mess: "", type: "" });
 
   useEffect(() => {
     //get request to the json server
@@ -48,9 +48,12 @@ const App = () => {
               per.id !== returnedPerson.id ? per : returnedPerson
             )
           );
-          setMessage(`Updated ${returnedPerson.name}'s number`);
+          setMessage({
+            mess: `Updated ${returnedPerson.name}'s number`,
+            type: "green",
+          });
           setTimeout(() => {
-            setMessage(null);
+            setMessage({ mess: null, type: null });
           }, 3000);
         });
       }
@@ -61,9 +64,9 @@ const App = () => {
         setPersons(persons.concat(returnedPerson));
         setNewName("");
         setNewNumber("");
-        setMessage(`Added ${returnedPerson.name} `);
+        setMessage({ mess: `Added ${returnedPerson.name} `, type: "green" });
         setTimeout(() => {
-          setMessage(null);
+          setMessage({ mess: null, type: null });
         }, 3000);
       });
     }
@@ -91,9 +94,13 @@ const App = () => {
         .deletePerson(id)
         .then(() => setPersons(persons.filter((per) => per.id !== id)))
         .catch((error) => {
-          alert(
-            `The person '${personToDelete.name}' was already deleted from the server.`
-          );
+          setMessage({
+            mess: `The person '${personToDelete.name}' was already deleted from the server.`,
+            type: "red",
+          });
+          setTimeout(() => {
+            setMessage({ mess: null, type: null });
+          }, 3000);
           setPersons(persons.filter((per) => per.id !== id));
         });
     }

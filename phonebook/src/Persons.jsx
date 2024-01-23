@@ -1,5 +1,4 @@
 //receive phonebook, display all the members
-import Person from "./Person";
 
 const Persons = ({ persons, filter, handleDelete }) => {
   const phonesToShow =
