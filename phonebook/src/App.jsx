@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import axios from "axios";
+import Notification from "./Notification";
 import Filter from "./Filter";
 import PersonForm from "./PersonForm";
 import Persons from "./Persons";
@@ -10,6 +10,7 @@ const App = () => {
   const [newName, setNewName] = useState("");
   const [newNumber, setNewNumber] = useState("");
   const [filter, setNewFilter] = useState("");
+  const [message, setMessage] = useState("prove");
 
   useEffect(() => {
     //get request to the json server
@@ -30,14 +31,41 @@ const App = () => {
 
     const duplicate = persons.some((per) => per.name === newPerson.name);
 
+    //if name already exists, ask whether to change number
+    if (duplicate) {
+      if (
+        window.confirm(
+          `${newPerson.name} is already in phonebook, replace old number with a new one?`
+        )
+      ) {
+        const per = persons.find((per) => per.name === newPerson.name);
+        const id = per.id;
+        const personToChange = { ...per, number: newPerson.number };
+
+        personsService.update(id, personToChange).then((returnedPerson) => {
+          setPersons(
+            persons.map((per) =>
+              per.id !== returnedPerson.id ? per : returnedPerson
+            )
+          );
+          setMessage(`Updated ${returnedPerson.name}'s number`);
+          setTimeout(() => {
+            setMessage(null);
+          }, 3000);
+        });
+      }
+    }
+
     if (!duplicate) {
       personsService.create(newPerson).then((returnedPerson) => {
         setPersons(persons.concat(returnedPerson));
         setNewName("");
         setNewNumber("");
+        setMessage(`Added ${returnedPerson.name} `);
+        setTimeout(() => {
+          setMessage(null);
+        }, 3000);
       });
-    } else {
-      alert(`${newPerson.name} is already in the phonebook`);
     }
   };
 
@@ -74,6 +102,7 @@ const App = () => {
   return (
     <div>
       <h2>Phonebook</h2>
+      <Notification message={message} />
       <Filter filter={filter} handler={handleChangeFilter} />
       <h3>Add a new</h3>
 
