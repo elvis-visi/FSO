@@ -1,15 +1,17 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
-
+import Country from "./Country";
 const App = () => {
   //component to control the input value
   const [filter, setFilter] = useState("");
   const [results, setResults] = useState([]);
+  const [selectedCountry, setSelectedCountry] = useState(null);
 
   const filterChange = (event) => {
     //event.target -> input element
     console.log(event.target.value);
     setFilter(event.target.value);
+    setSelectedCountry(null);
   };
 
   useEffect(() => {
@@ -29,6 +31,9 @@ const App = () => {
 
   //whenever the filter changes we want to make calls to the api
   //or fetch all countries initially then filter
+  const showCountry = (country) => {
+    setSelectedCountry(country);
+  };
 
   return (
     <div>
@@ -37,28 +42,16 @@ const App = () => {
         {filter && countries.length > 10 ? (
           <p>Too many matches, specify another filter</p>
         ) : countries.length === 1 ? (
-          <div>
-            <h2>{countries[0].name.official}</h2>
-            <div> capital {countries[0].capital[0]}</div>
-            <div> area {countries[0].area}</div>
-            <h3>languages:</h3>
-            <ul>
-              {Object.values(countries[0].languages).map((language) => (
-                <li key={language}>{language}</li>
-              ))}
-            </ul>
-
-            <img
-              src={countries[0].flags.png}
-              alt={`${countries[0].name.common} Flag`}
-              style={{ width: "200px", height: "auto" }}
-            />
-          </div>
+          <Country country={countries[0]} />
         ) : (
           //if 10 or less countries list them
           filter &&
           countries.map((country) => (
-            <li key={country.name.common}>{country.name.common}</li>
+            <li key={country.name.common}>
+              {country.name.common}
+              <button onClick={() => showCountry(country)}>show</button>
+              {selectedCountry === country && <Country country={country} />}
+            </li>
           ))
         )}
       </div>
