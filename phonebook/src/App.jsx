@@ -68,7 +68,17 @@ const App = () => {
         setTimeout(() => {
           setMessage({ mess: null, type: null });
         }, 3000);
-      });
+      })//error passd by the backend
+       .catch(error => {
+        //using default Mongoose error response
+        setMessage({
+          mess: `${error.response.data.error}`,
+          type: "red",
+        });
+        setTimeout(() => {
+          setMessage({ mess: null, type: null });
+        }, 3000);
+      })
     }
   };
 
