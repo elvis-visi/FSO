@@ -2,9 +2,9 @@ POST http://localhost:3003/api/blogs
 Content-Type: application/json
 
 {
-  "title": "FSO",
+  "title": "FSO222",
   "author": "sevi",
   "url": "https://fullstackopen.com/",
-  "likes": 2,
+  "likes": 5
   
 }
