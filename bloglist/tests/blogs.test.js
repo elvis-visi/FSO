@@ -42,3 +42,27 @@ describe('total likes', () =>{
       })
 
 })
+
+
+describe('favorite blog', () => {
+
+    const blog = {
+        title: "Canonical string reduction",
+        author: "Edsger W. Dijkstra",
+        likes: 12
+      }
+
+      test('returns the blog with the most likes', () => {
+        const result = listHelper.favoriteBlog(blogs)
+
+        expect(result).toEqual(blog)
+      })
+
+      test('returns null if empty blog', () => {
+        const result = listHelper.favoriteBlog([])
+
+        expect(result).toEqual(null)
+      })
+
+
+})

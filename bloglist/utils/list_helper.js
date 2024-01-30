@@ -14,6 +14,28 @@ const totalLikes = (blogs) => {
     return sum;
 }
 
+//blog with the most likes, return object, title,author,likes
+const favoriteBlog = (blogs) => {
+    if (blogs.length === 0) {
+      return null;
+    }
+  
+    const maxLikesBlog = blogs.reduce((max, blog) => {
+      return blog.likes > max.likes ? blog : max;
+    }, { likes: -1 }); // Initial value is an object with -1 likes
+  
+    // Now maxLikesBlog contains the blog with the most likes
+    // Create a new object with only the desired properties
+    const resultBlog = {
+      title: maxLikesBlog.title,
+      author: maxLikesBlog.author,
+      likes: maxLikesBlog.likes,
+    };
+  
+    return resultBlog;
+  };
+  
+
 const blogs = [
     {
       _id: "5a422a851b54a676234d17f7",
@@ -68,5 +90,6 @@ const blogs = [
 module.exports = {
     dummy,
     totalLikes,
+    favoriteBlog,
     blogs
 }
