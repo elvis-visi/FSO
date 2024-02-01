@@ -1,0 +1,10 @@
+PUT http://localhost:3003/api/blogs/65b78085c8ba38ee15ce87b0
+Content-Type: application/json
+
+{
+  "title": "MERN",
+  "author": "reku",
+  "url": "https://fullstackopen.com/",
+  "likes": 3
+  
+}
