@@ -39,7 +39,32 @@ test('id property is defined', async () => {
     const response =  await helper.blogsInDb()
     //array of JSON objects
     expect(response[0].id).toBeDefined()
-    
+})
+
+test('blog posted correctly to the DB', async () =>{
+
+    const blog = {
+        title: 'example',
+        author: 'sevi',
+        url:'www.example.com',
+        likes: 3
+    }
+
+    await api
+    .post('/api/blogs')
+    .send(blog)
+    .expect(201)
+    .expect('Content-Type', /application\/json/)
+
+    //compare the DB length to the initial lenght
+    const response = await helper.blogsInDb();
+    const titles = response.map(blog => blog.title)
+
+    expect(response).toHaveLength(helper.initialBlogs.length  +1)
+
+    //verify the content of the blog is saved correctly
+    expect(titles).toContain(blog.title)
+
 
 })
 
