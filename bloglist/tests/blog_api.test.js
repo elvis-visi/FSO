@@ -68,6 +68,27 @@ test('blog posted correctly to the DB', async () =>{
 
 })
 
+test('if the likes property is missing from the request, it will default to the value 0',async () =>{
+
+
+    const newBlog = {
+        title: 'Test Default Likes',
+        author: 'No Likes Author',
+        url: 'http://nolikes.example.com'
+        // Notice the likes property is intentionally omitted
+      };
+    
+      const response = await api
+        .post('/api/blogs')
+        .send(newBlog)
+        .expect(201)
+        .expect('Content-Type', /application\/json/);
+    
+      expect(response.body.likes).toBeDefined();
+      expect(response.body.likes).toBe(0);
+}
+)
+
 
 afterAll(async () => {
     await mongoose.connection.close()
