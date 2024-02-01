@@ -89,6 +89,38 @@ test('if the likes property is missing from the request, it will default to the 
 }
 )
 
+describe('Testing when url or title are missing', () => {
+    test('url missing', async() => {
+
+        const newBlog = {
+            title:'url missing',
+            author: 'No Likes Author',
+            likes:3
+          };
+    
+          const response = await api.
+          post('/api/blogs')
+          .send(newBlog)
+          .expect(400)
+    })
+
+    test('title missing', async() => {
+
+        const newBlog = {
+           url:'www.google.com',
+            author: 'No Likes Author',
+            likes:3
+          };
+    
+          const response = await api.
+          post('/api/blogs')
+          .send(newBlog)
+          .expect(400)
+    })
+})
+
+
+
 
 afterAll(async () => {
     await mongoose.connection.close()
