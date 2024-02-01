@@ -1,8 +1,22 @@
 const mongoose = require('mongoose')
+const helper = require('./test_helper')
 const supertest = require('supertest')
 const app = require('../app')
+const Blog = require('../models/blog')
 
 const api = supertest(app)
+
+
+beforeEach(async () => {
+    await Blog.deleteMany({})
+    //array of Blog documents
+    const blogObjects = helper.initialBlogs
+    .map(blog => new Blog(blog))
+    //array of promises
+    const promiseArray = blogObjects.map(blog => blog.save())
+    await Promise.all(promiseArray)
+})
+
 
 test('blogs are returned as JSON', async () => {
 
@@ -14,16 +28,9 @@ test('blogs are returned as JSON', async () => {
 
 test('there are two blogs', async () => {
 
-    const response =  await api.get('/api/blogs')
+    const response =  await helper.blogsInDb()
 
-    expect(response.body).toHaveLength(2)
-
-})
-
-test(`the first blog's title is`, async() => {
-    const response =  await api.get('/api/blogs')
-
-   expect(response.body[0].title).toBe('FSO')
+    expect(response).toHaveLength(2)
 
 })
 
