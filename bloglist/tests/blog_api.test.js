@@ -34,6 +34,16 @@ test('there are two blogs', async () => {
 
 })
 
+test('id property is defined', async () => {
+
+    const response =  await helper.blogsInDb()
+    //array of JSON objects
+    expect(response[0].id).toBeDefined()
+    
+
+})
+
+
 afterAll(async () => {
     await mongoose.connection.close()
 })

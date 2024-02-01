@@ -20,7 +20,9 @@ const initialBlogs = [
 ]
 
 const blogsInDb = async () => {
+    //array of JS objects
     const blogs = await Blog.find({})
+    //array of JSON objects
     return blogs.map(blog => blog.toJSON())
 
 }
