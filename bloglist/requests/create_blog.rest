@@ -3,10 +3,10 @@ Content-Type: application/json
 Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InJvb3QiLCJpZCI6IjY1YmUxNzIwN2ZkYjM0MzY1MjZmNmRkMCIsImlhdCI6MTcwNjk4MzQwMn0.bKEBfqAZDQtV2C6hZerFy7kswOHhs4UPs8u0XsCJMaU
 
 {
-  "title": "Blog with user's id",
+  "title": "middleware again",
   "author": "Superuser",
   "url": "https://fullstackopen.com/",
-  "likes": 5,
+  "likes": 8,
   "userId":"65be17207fdb3436526f6dd0"
   
 }
