@@ -2,9 +2,10 @@ POST http://localhost:3003/api/blogs
 Content-Type: application/json
 
 {
-  "title": "MERN",
-  "author": "sevidddd",
+  "title": "Blog with user's id",
+  "author": "Superuser",
   "url": "https://fullstackopen.com/",
-  "likes": 5
+  "likes": 5,
+  "userId":"65be17207fdb3436526f6dd0"
   
 }
