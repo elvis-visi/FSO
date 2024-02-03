@@ -29,7 +29,11 @@ usersRouter.post('/', async (request, response,next) => {
 
 usersRouter.get('/', async (request, response) => {
 
-    const users = await User.find({})
+    const users = await User
+    //ids referencing blog objects in the blogs field
+    //of the user document will be replaced by the 
+    //referenced blog documents
+    .find({}).populate('blogs')
     response.json(users)
 
 })
