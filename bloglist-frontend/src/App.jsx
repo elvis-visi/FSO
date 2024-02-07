@@ -3,6 +3,7 @@ import Blog from './components/Blog'
 import Notification from './components/Notification'
 import Togglable from './components/Togglable'
 import LoginForm from './components/LoginForm'
+import BlogForm from './components/BlogForm'
 import blogService from './services/blogs'
 import loginService from './services/login'
 
@@ -121,33 +122,19 @@ const App = () => {
 
       <h2>create New</h2>
 
-<form onSubmit={addBlog}>
-  <div>
-      title: 
-      <input
-      type="text"
-      value={title}
-      onChange={({target}) => setTitle(target.value)}
-      />
-  </div>
-  <div>
-      author: 
-      <input
-      type="text"
-      value={author}
-      onChange={({target}) => setAuthor(target.value)}
-      />
-  </div>
-  <div>
-      url: 
-      <input
-      type="text"
-      value={url}
-      onChange={({target}) => setUrl(target.value)}
-      />
-  </div>
-  <button type="submit">create</button>
-</form>
+      <Togglable buttonLabel='new blog'>
+        <BlogForm 
+          onSubmit={addBlog}
+          handleAuthorChange = {({ target }) => setAuthor(target.value)}
+          handleTitleChange = {({ target }) => setTitle(target.value)}
+          handleUrlChange = {({ target }) => setUrl(target.value)}
+          title={title}
+          author={author}
+          url={url}
+
+        
+        />
+      </Togglable>
 
       {blogs.map(blog =>
         <Blog key={blog.id} blog={blog} />
