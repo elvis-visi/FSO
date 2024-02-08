@@ -13,9 +13,7 @@ const App = () => {
   const [username,setUserName] = useState('')
   const [password,setPassword] = useState('')
   const [user,setUser] = useState(null)
-  const [title, setTitle] = useState('')
-  const [author, setAuthor] = useState('')
-  const [url, setUrl] = useState('')
+ 
   const [errorMessage, setErrorMessage] = useState(null)
 
   useEffect(() => {
@@ -33,26 +31,14 @@ const App = () => {
     }
   }, [])
 
-  const addBlog = async (event) =>{
-    event.preventDefault()
-    const blog = {
-      title,
-      author,
-      url
-    }
-
+  const addBlog = async (blogObject) =>{
     try{
-
-      const returnedBlog = await blogService.create(blog);
+      const returnedBlog = await blogService.create(blogObject);
       setBlogs(blogs.concat(returnedBlog));
       setErrorMessage(`a new blog ${returnedBlog.title} by ${user.name}`)
       setTimeout(() => {
         setErrorMessage(null)
       }, 5000)
-      setTitle('');
-      setAuthor('');
-      setUrl('');
-
     }catch(exception){
 
     }
@@ -123,17 +109,7 @@ const App = () => {
       <h2>create New</h2>
 
       <Togglable buttonLabel='new blog'>
-        <BlogForm 
-          onSubmit={addBlog}
-          handleAuthorChange = {({ target }) => setAuthor(target.value)}
-          handleTitleChange = {({ target }) => setTitle(target.value)}
-          handleUrlChange = {({ target }) => setUrl(target.value)}
-          title={title}
-          author={author}
-          url={url}
-
-        
-        />
+        <BlogForm createBlog = {addBlog}/>
       </Togglable>
 
       {blogs.map(blog =>
