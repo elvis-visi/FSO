@@ -1,6 +1,6 @@
-import { useState } from 'react'
+import { useState, forwardRef, useImperativeHandle } from 'react'
 
-const Togglable = (props) => {
+const Togglable = forwardRef ((props, refs) => {
 
 //set the visibility of the child component
 const [visible, setVisible] = useState(false)
@@ -12,6 +12,13 @@ const showWhenVisible = { display: visible ? '' : 'none' }
 const toggleVisibility = () => {
     setVisible(!visible)
   }
+
+  //make toggleVisibility available outside this component
+  useImperativeHandle(refs, () => {
+    return {
+      toggleVisibility
+    }
+  })
 
   return (
     <div>
@@ -27,7 +34,7 @@ const toggleVisibility = () => {
 
   )
 
-}
+})
 
 
 
