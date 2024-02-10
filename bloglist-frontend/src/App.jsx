@@ -130,7 +130,9 @@ const App = () => {
         <BlogForm createBlog = {addBlog}/>
       </Togglable>
 
-      {blogs.map(blog =>
+      {blogs.
+      slice() // shallow copy of blogs, to not mutate the state of blogs
+      .sort((a,b) =>  b.likes-a.likes).map(blog =>
         <Blog key={blog.id} blog={blog} handleUpdate={() => addLikes(blog.id)} />
       )}
     </div>
