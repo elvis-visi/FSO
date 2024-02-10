@@ -72,10 +72,19 @@ blogsRouter.get('/', async (request, response) => {
   });
   
 
-  blogsRouter.put('/:id', async (request,response,next) => {
+  blogsRouter.put('/:id', userExtractor, async (request,response,next) => {
     const body = request.body  //new content 
 
-    const blog = {
+    //blog to update
+    const blog = await Blog.findById(request.params.id)
+    //user who created the blog
+    const user = request.user
+
+    if (!user || blog.user.toString() !== user.id.toString()) {
+      return response.status(401).json({ error: 'operation not permitted' })
+    }
+
+    const newBlog = {
       title: body.title,
       author: body.author,
       url: body.url,
@@ -83,7 +92,7 @@ blogsRouter.get('/', async (request, response) => {
     }
 
     try{ 
-      const updatedBlog = await Blog.findByIdAndUpdate(request.params.id, blog, {new: true})
+      const updatedBlog = await Blog.findByIdAndUpdate(request.params.id, newBlog, {new: true})
       response.json(updatedBlog)
     }catch(Exception){
       next(Exception)

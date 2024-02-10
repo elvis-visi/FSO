@@ -47,6 +47,21 @@ const App = () => {
 
   }
 
+  const addLikes = async (id) => {
+    //get the blog to update
+    const blogToUpdate = blogs.find(b => b.id === id)
+    //increase likes by 1 call update (id, newBlog)
+   
+   try{
+    const updatedBlog = await blogService.updateBlog(id, {...blogToUpdate, likes: blogToUpdate.likes + 1})
+    //update the blogs state 
+    setBlogs(blogs.map(blog => blog.id !== id ? blog : updatedBlog))
+   }catch(exception){
+
+   }
+   
+  }
+
   
   const handleLogin = async (event) => {
     event.preventDefault()
@@ -116,7 +131,7 @@ const App = () => {
       </Togglable>
 
       {blogs.map(blog =>
-        <Blog key={blog.id} blog={blog} />
+        <Blog key={blog.id} blog={blog} handleUpdate={() => addLikes(blog.id)} />
       )}
     </div>
 
