@@ -62,6 +62,21 @@ const App = () => {
    
   }
 
+  const deleteBlog = async (id) => {
+    if(window.confirm('Are you sure you want to delete this blog?')){
+      try{
+        await blogService.deleteBlog(id);
+        setBlogs(blogs.filter(blog => blog.id !== id))
+
+      }catch(exception){
+        setErrorMessage(`Only the user's creator can delete blog`)
+      }
+      setTimeout(() => {
+        setErrorMessage(null)
+      },5000)
+    }
+  }
+
   
   const handleLogin = async (event) => {
     event.preventDefault()
@@ -133,7 +148,11 @@ const App = () => {
       {blogs.
       slice() // shallow copy of blogs, to not mutate the state of blogs
       .sort((a,b) =>  b.likes-a.likes).map(blog =>
-        <Blog key={blog.id} blog={blog} handleUpdate={() => addLikes(blog.id)} />
+        <Blog key={blog.id} blog={blog}
+         handleUpdate={() => addLikes(blog.id)} 
+         handleDelete = {() => deleteBlog(blog.id)}
+         canRemove={user && blog.user.username===user.username}
+         />
       )}
     </div>
 

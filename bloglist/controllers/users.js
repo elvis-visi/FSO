@@ -33,7 +33,7 @@ usersRouter.get('/', async (request, response) => {
     //ids referencing blog objects in the blogs field
     //of the user document will be replaced by the 
     //referenced blog documents
-    .find({}).populate('blogs')
+    .find({}).populate('blogs', { title: 1, author: 1, url: 1, likes: 1 })
     response.json(users)
 
 })

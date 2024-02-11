@@ -9,7 +9,7 @@ const { userExtractor } = require('../utils/middleware')
 blogsRouter.get('/', async (request, response) => {
   
       const blogs = await Blog
-      .find({}).populate('user', {name:1})
+      .find({}).populate('user', {username: 1,name:1})
       response.json(blogs)
 
   })
@@ -36,10 +36,11 @@ blogsRouter.get('/', async (request, response) => {
     })
   
       try{
-      const savedBlog =  await blog.save()
+      let savedBlog =  await blog.save()
       user.blogs =  user.blogs.concat(savedBlog._id)
       await user.save()
 
+      savedBlog = await Blog.findById(savedBlog._id).populate('user')
         response.status(201).json(savedBlog)
       }catch(Exception) {
           response.status(400).end()
@@ -92,13 +93,16 @@ blogsRouter.get('/', async (request, response) => {
     }
 
     try{ 
-      const updatedBlog = await Blog.findByIdAndUpdate(request.params.id, newBlog, {new: true})
+      let  updatedBlog = await Blog.findByIdAndUpdate(request.params.id, newBlog, {new: true})
+      updatedBlog = await Blog.findById(updatedBlog._id).populate('user') 
       response.json(updatedBlog)
     }catch(Exception){
       next(Exception)
     }
 
   })
+
+ 
 
 
 
