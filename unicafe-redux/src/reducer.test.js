@@ -23,7 +23,7 @@ describe('unicafe reducer', () => {
       type: 'GOOD'
     }
     const state = initialState
-
+// deep-freeze to ensure that the reducer function does not mutate the state object
     deepFreeze(state)
     const newState = counterReducer(state, action)
     expect(newState).toEqual({
