@@ -1,6 +1,7 @@
 /* eslint-disable react/prop-types */
 import { useSelector, useDispatch } from 'react-redux'
 import { voteAction } from '../reducers/anecdoteReducer'
+import { useMemo } from 'react';
 
 const Anecdote = ({ handleVote, anecdote }) => {
     return (
@@ -20,11 +21,15 @@ const AnecdoteList = () => {
         dispatch(voteAction(id))
     }
 
+    const filteredAndSortedAnecdotes = useMemo(() => {
+        return anecdotes
+            .filter(an => an.content.toLowerCase().includes(filter))
+            .sort((a, b) => b.votes - a.votes)
+    }, [anecdotes, filter])
+
     return (
         <div>
-            {anecdotes
-                .filter(an => an.content.toLowerCase().includes(filter))
-                .sort((a, b) => b.votes - a.votes)
+            {filteredAndSortedAnecdotes
                 .map(anecdote => (
                     <Anecdote
                         key={anecdote.id}
