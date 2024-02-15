@@ -8,10 +8,14 @@ const messageSlice = createSlice({
     reducers:{
         createMessage(state,action){
             return action.payload
+        },
+        removeNotification(){
+            return null;
+        
         }
     }
 
 })
 
-export const {createMessage} = messageSlice.actions
+export const {createMessage, removeNotification} = messageSlice.actions
 export default messageSlice.reducer
