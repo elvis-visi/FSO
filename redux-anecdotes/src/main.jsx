@@ -1,11 +1,13 @@
 import ReactDOM from 'react-dom/client'
 import App from './App'
 
+
 import { Provider } from 'react-redux'
 import { configureStore } from '@reduxjs/toolkit'
 import filterReducer from './reducers/filterReducer'
-import anecdotesReducer from './reducers/anecdoteReducer'
+import anecdotesReducer, {setAnecdotes} from './reducers/anecdoteReducer'
 import messageReducer from './reducers/messageReducer'
+
 
 
 const store = configureStore({
@@ -16,6 +18,9 @@ const store = configureStore({
   }
 })
 console.log(store.getState())
+
+
+
 
 
 ReactDOM.createRoot(document.getElementById('root')).render(
