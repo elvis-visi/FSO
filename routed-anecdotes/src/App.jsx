@@ -111,6 +111,13 @@ const CreateNew = (props) => {
     navigate('/anecdotes')
   }
 
+  const resetAll = (event) => {
+    event.preventDefault()
+    contentObj.reset()
+    authorObj.reset()
+    infoObj.reset()
+  }
+
   return (
     <div>
       <h2>create a new anecdote</h2>
@@ -127,7 +134,8 @@ const CreateNew = (props) => {
           url for more info
           <input name='info' {...infoObj}/>
         </div>
-        <button>create</button>
+        <button type='submit'>create</button>
+        <button onClick={resetAll}>reset</button>
       </form>
     </div>
   )
