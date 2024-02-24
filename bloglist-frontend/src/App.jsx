@@ -43,17 +43,17 @@ const App = () => {
     }
   }, [])
 
-  const addBlog = async (blogObject) =>{
-    try{
-      blogFormRef.current.toggleVisibility()
-      const returnedBlog = await blogService.create(blogObject);
-      setBlogs(blogs.concat(returnedBlog));
-      showMessage(`a new blog ${returnedBlog.title} by ${user.name}`)
-    }catch(exception){
+  // const addBlog = async (blogObject) =>{
+  //   try{
+  //     blogFormRef.current.toggleVisibility()
+  //     const returnedBlog = await blogService.create(blogObject);
+  //     setBlogs(blogs.concat(returnedBlog));
+  //     showMessage(`a new blog ${returnedBlog.title} by ${user.name}`)
+  //   }catch(exception){
 
-    }
+  //   }
 
-  }
+  // }
 
   const addLikes = async (id) => {
     //get the blog to update
@@ -143,7 +143,7 @@ const App = () => {
       <h2>create New</h2>
 
       <Togglable buttonLabel='new blog' ref={blogFormRef}>
-        <BlogForm createBlog = {addBlog}/>
+        <BlogForm />
       </Togglable>
 
       {blogs.
