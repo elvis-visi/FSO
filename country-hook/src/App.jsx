@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import { useState, useEffect } from 'react'
 import axios from 'axios'
 
 const useField = (type) => {
@@ -18,32 +18,34 @@ const useField = (type) => {
 const useCountry = (name) => {
   const [country, setCountry] = useState(null)
 
-  useEffect(() => {})
+  useEffect(() => {
+    const url = `https://restcountries.com/v3.1/name/${name}?fullText=true`
+    if (name.length>0) {
+      console.log(url)
+      axios.get(url).then(result => {
+        setCountry(result.data[0])
+      }).catch(() => {
+        setCountry(null)
+      })
+    }
+  }, [name])
 
   return country
 }
 
 const Country = ({ country }) => {
   if (!country) {
-    return null
-  }
-
-  if (!country.found) {
-    return (
-      <div>
-        not found...
-      </div>
-    )
+    return <div>not found...</div>
   }
 
   return (
     <div>
-      <h3>{country.data.name} </h3>
-      <div>capital {country.data.capital} </div>
-      <div>population {country.data.population}</div> 
-      <img src={country.data.flag} height='100' alt={`flag of ${country.data.name}`}/>  
+      <h3>{country.name.common}</h3>
+      <div>population {country.population}</div> 
+      <div>capital {country.capital}</div>
+      <img src={country.flags.png} height='100' alt={`flag of ${country.name.common}`}/> 
     </div>
-  )
+  )  
 }
 
 const App = () => {
@@ -63,7 +65,7 @@ const App = () => {
         <button>find</button>
       </form>
 
-      <Country country={country} />
+      {name.length>0&&<Country country={country} />}
     </div>
   )
 }
