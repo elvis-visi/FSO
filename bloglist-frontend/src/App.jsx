@@ -8,9 +8,10 @@ import blogService from './services/blogs'
 import loginService from './services/login'
 import {  useDispatch, useSelector } from 'react-redux'
 import { setNotification, clearNotification } from './reducers/notificationReducer'
+import { initializeBlogs } from './reducers/blogsReducer'
 
 const App = () => {
-  const [blogs, setBlogs] = useState([])
+  const blogs = useSelector(state => state.blogs)
   const [username,setUserName] = useState('')
   const [password,setPassword] = useState('')
   const [user,setUser] = useState(null)
@@ -29,10 +30,9 @@ const App = () => {
   const blogFormRef = useRef()
 
   useEffect(() => {
-    blogService.getAll().then(blogs =>
-      setBlogs( blogs )
-    )  
-  }, [])
+    dispatch(initializeBlogs())
+  },[])
+
 
   useEffect(() => {
     const loggedUserJSON = window.localStorage.getItem('loggedBlogappUser')
