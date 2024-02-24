@@ -6,14 +6,25 @@ import LoginForm from './components/LoginForm'
 import BlogForm from './components/BlogForm'
 import blogService from './services/blogs'
 import loginService from './services/login'
-
+import {  useDispatch, useSelector } from 'react-redux'
+import { setNotification, clearNotification } from './reducers/notificationReducer'
 
 const App = () => {
   const [blogs, setBlogs] = useState([])
   const [username,setUserName] = useState('')
   const [password,setPassword] = useState('')
   const [user,setUser] = useState(null)
-  const [errorMessage, setErrorMessage] = useState(null)
+
+
+  const dispatch = useDispatch()
+  const message = useSelector(state => state.notification.message)
+
+  const showMessage = (message) => {
+    dispatch(setNotification(message))
+    setTimeout(() => {
+      dispatch(clearNotification())
+    },5000)
+  }
 
   const blogFormRef = useRef()
 
@@ -37,10 +48,7 @@ const App = () => {
       blogFormRef.current.toggleVisibility()
       const returnedBlog = await blogService.create(blogObject);
       setBlogs(blogs.concat(returnedBlog));
-      setErrorMessage(`a new blog ${returnedBlog.title} by ${user.name}`)
-      setTimeout(() => {
-        setErrorMessage(null)
-      }, 5000)
+      showMessage(`a new blog ${returnedBlog.title} by ${user.name}`)
     }catch(exception){
 
     }
@@ -69,14 +77,10 @@ const App = () => {
         setBlogs(blogs.filter(blog => blog.id !== id))
 
       }catch(exception){
-        setErrorMessage(`Only the user's creator can delete blog`)
-      }
-      setTimeout(() => {
-        setErrorMessage(null)
-      },5000)
+      showMessage(`Only the user's creator can delete blog`)
     }
   }
-
+  }
   
   const handleLogin = async (event) => {
     event.preventDefault()
@@ -94,10 +98,7 @@ const App = () => {
         setPassword('')
 
     }catch(exception){
-      setErrorMessage('Wrong credentials')
-      setTimeout(() => {
-        setErrorMessage(null)
-      }, 5000)
+      showMessage('Wrong credentials')
     }
 
   } 
@@ -114,7 +115,7 @@ const App = () => {
     return (
       <>
       <p>Blogs app</p>
-      <Notification message= {errorMessage} />
+      <Notification message= {message} />
       <Togglable buttonLabel='login'>
         <LoginForm
           username={username}
@@ -137,7 +138,7 @@ const App = () => {
       <button onClick={logout}>logout</button>
       <h2>blogs</h2>
 
-      <Notification  message={errorMessage}   />
+      <Notification  message={message}   />
 
       <h2>create New</h2>
 
