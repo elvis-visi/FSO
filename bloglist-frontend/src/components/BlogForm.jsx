@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { createBlog } from '../reducers/blogsReducer'
 
-const BlogForm = () => {
+const BlogForm = ({ onBlogCreated }) => {
     const [title, setTitle] = useState('')
     const [author, setAuthor] = useState('')
     const [url, setUrl] = useState('')
@@ -17,10 +17,14 @@ const BlogForm = () => {
             title,
             author,
             url
-        }))
-        setTitle('')
-        setAuthor('')
-        setUrl('')
+        })).then(() => {
+            // Assuming createBlog is a thunk that resolves after the blog is created
+            setTitle('');
+            setAuthor('');
+            setUrl('');
+            onBlogCreated(); // Call the callback passed from the parent component
+          });
+       
     }
 
     return (
