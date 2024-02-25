@@ -9,13 +9,14 @@ import loginService from './services/login'
 import {  useDispatch, useSelector } from 'react-redux'
 import { setNotification, clearNotification } from './reducers/notificationReducer'
 import { initializeBlogs, deleteBlog, updateBlog } from './reducers/blogsReducer'
+import {loginIn,setUser, clearUser} from './reducers/userReducer'
 
 const App = () => {
   const blogs = useSelector(state => state.blogs)
   const [username,setUserName] = useState('')
   const [password,setPassword] = useState('')
-  const [user,setUser] = useState(null)
-
+ 
+  const user = useSelector(state => state.user)
 
   const dispatch = useDispatch()
   const message = useSelector(state => state.notification.message)
@@ -38,7 +39,7 @@ const App = () => {
     const loggedUserJSON = window.localStorage.getItem('loggedBlogappUser')
     if (loggedUserJSON) {
       const user = JSON.parse(loggedUserJSON)
-      setUser(user)
+      dispatch(setUser(user))
   
     }
   }, [])
@@ -63,15 +64,7 @@ const App = () => {
   const handleLogin = async (event) => {
     event.preventDefault()
     try{
-      const user = await loginService.login({
-        username,password})
-
-        window.localStorage.setItem(
-          'loggedBlogappUser', JSON.stringify(user)
-        )
-
-        blogService.setToken(user.token)
-        setUser(user)
+      dispatch(loginIn({username,password}))
         setUserName('')
         setPassword('')
 
@@ -83,10 +76,7 @@ const App = () => {
 
   const logout = (event) => {
     event.preventDefault()
-    window.localStorage.clear()
-    setUser(null)
-
-
+  dispatch(clearUser())
   }
 
   if(user === null) {
