@@ -42,14 +42,6 @@ const App = () => {
     }
   }, [])
 
-
-
-  const addLikes = async (id) => {
-   dispatch(updateBlog(id))
-  }
-
- 
-  
   const handleLogin = async (event) => {
     event.preventDefault()
     try{
@@ -107,7 +99,6 @@ const App = () => {
       slice() // shallow copy of blogs, to not mutate the state of blogs
       .sort((a,b) =>  b.likes-a.likes).map(blog =>
         <Blog key={blog.id} blog={blog}
-         handleUpdate={() => addLikes(blog.id)} 
          canRemove={user && blog.user.username===user.username}
          />
       )}

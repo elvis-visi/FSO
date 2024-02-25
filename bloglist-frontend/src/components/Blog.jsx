@@ -1,8 +1,8 @@
 import { useState } from "react"
-import { UseDispatch, useDispatch, useSelector } from "react-redux"}
-import { initializeBlogs, deleteBlog, updateBlog } from './reducers/blogsReducer'
+import {  useDispatch, useSelector } from "react-redux"
+import { initializeBlogs, deleteBlog, updateBlog } from '../reducers/blogsReducer'
 
-const Blog = ({ blog, handleUpdate, canRemove}) =>  {
+const Blog = ({ blog, canRemove}) =>  {
  
 
   const [visible, setVisible] = useState(false)
@@ -42,6 +42,10 @@ const Blog = ({ blog, handleUpdate, canRemove}) =>  {
   }
   }
 
+  const addLikes = async (id) => {
+    dispatch(updateBlog(id))
+   }
+
   const toggleVisibility = () => {
     setVisible(!visible)
   }
@@ -65,15 +69,13 @@ const Blog = ({ blog, handleUpdate, canRemove}) =>  {
   <div style={{...blogStyle, ...showWhenVisible}}>
     <p>{blog.title} {blog.author}  <button onClick={toggleVisibility}>hide</button></p>
     <p>{blog.url}</p>
-    <p>likes {blog.likes} <button onClick={handleUpdate}>like</button></p>
+    <p>likes {blog.likes} <button onClick={ () => addLikes(blog.id)}>like</button></p>
     <p>{blog.author}</p>
    
    {canRemove && 
-   <button onClick={handleDeleteBlog}>Remove </button>
+   <button onClick={() => handleDeleteBlog(blog.id)}>Remove </button>
    }
     
-
-
   </div>
  </>
  
