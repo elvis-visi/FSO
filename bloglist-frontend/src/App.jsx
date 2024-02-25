@@ -1,16 +1,16 @@
 import { useState, useEffect, useRef  } from 'react'
-import Blog from './components/Blog'
+import Blogs from './components/Blogs'
 import Notification from './components/Notification'
 import Togglable from './components/Togglable'
 import LoginForm from './components/LoginForm'
 import BlogForm from './components/BlogForm'
 import {  useDispatch, useSelector } from 'react-redux'
 import { setNotification, clearNotification } from './reducers/notificationReducer'
-import { initializeBlogs, deleteBlog, updateBlog } from './reducers/blogsReducer'
+import { initializeBlogs } from './reducers/blogsReducer'
 import {loginIn,setUser, clearUser} from './reducers/userReducer'
 
 const App = () => {
-  const blogs = useSelector(state => state.blogs)
+
   const [username,setUserName] = useState('')
   const [password,setPassword] = useState('')
  
@@ -95,13 +95,7 @@ const App = () => {
       <BlogForm onBlogCreated={() => blogFormRef.current.toggleVisibility()} />
       </Togglable>
 
-      {blogs.
-      slice() // shallow copy of blogs, to not mutate the state of blogs
-      .sort((a,b) =>  b.likes-a.likes).map(blog =>
-        <Blog key={blog.id} blog={blog}
-         canRemove={user && blog.user.username===user.username}
-         />
-      )}
+     <Blogs />
     </div>
 
   )

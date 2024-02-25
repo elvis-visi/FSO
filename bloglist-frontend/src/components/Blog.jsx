@@ -2,7 +2,7 @@ import { useState } from "react"
 import {  useDispatch, useSelector } from "react-redux"
 import { initializeBlogs, deleteBlog, updateBlog } from '../reducers/blogsReducer'
 
-const Blog = ({ blog, canRemove}) =>  {
+const Blog = ({blog}) =>  {
  
 
   const [visible, setVisible] = useState(false)
@@ -13,8 +13,9 @@ const Blog = ({ blog, canRemove}) =>  {
   const showWhenVisible = { display: visible ? '' : 'none' }
 
   const dispatch = useDispatch()
-  const blogs = useSelector(state => state.blogs)
+
   const message = useSelector(state => state.notification)
+  const user = useSelector(state => state.user)
 
   const showMessage = (message) => {
     dispatch(setNotification(message))
@@ -50,41 +51,28 @@ const Blog = ({ blog, canRemove}) =>  {
     setVisible(!visible)
   }
 
-
-  // {blogs.
-  //   slice() // shallow copy of blogs, to not mutate the state of blogs
-  //   .sort((a,b) =>  b.likes-a.likes).map(blog =>
-  //     <Blog key={blog.id} blog={blog}
-  //      handleUpdate={() => addLikes(blog.id)} 
-  //      handleDelete = {() => handleDeleteBlog(blog.id)}
-  //      canRemove={user && blog.user.username===user.username}
-  //      />
-  //   )}
-
   return (
  <>
-  <div style={{...blogStyle, ...hideWhenVisible}}>
-    {blog.title} {blog.author}  <button onClick={toggleVisibility}>View</button>
-  </div>  
-  <div style={{...blogStyle, ...showWhenVisible}}>
-    <p>{blog.title} {blog.author}  <button onClick={toggleVisibility}>hide</button></p>
-    <p>{blog.url}</p>
-    <p>likes {blog.likes} <button onClick={ () => addLikes(blog.id)}>like</button></p>
-    <p>{blog.author}</p>
-   
-   {canRemove && 
-   <button onClick={() => handleDeleteBlog(blog.id)}>Remove </button>
-   }
+            <div style={{...blogStyle, ...hideWhenVisible}}>
+                {blog.title} {blog.author}  <button onClick={toggleVisibility}>View</button>
+              </div>  
+              <div style={{...blogStyle, ...showWhenVisible}}>
+                <p>{blog.title} {blog.author}  <button onClick={toggleVisibility}>hide</button></p>
+                <p>{blog.url}</p>
+                <p>likes {blog.likes} <button onClick={ () => addLikes(blog.id)}>like</button></p>
+                <p>{blog.author}</p>
+              
+              {user && blog.user.username===user.username && 
+              <button onClick={() => handleDeleteBlog(blog.id)}>Remove </button>
+              }
+                
+              </div>   
     
-  </div>
  </>
  
   )
 
 }
-
-
-
 
 
 export default Blog
