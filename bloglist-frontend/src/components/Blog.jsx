@@ -1,6 +1,8 @@
 import { useState } from "react"
+import { UseDispatch, useDispatch, useSelector } from "react-redux"}
+import { initializeBlogs, deleteBlog, updateBlog } from './reducers/blogsReducer'
 
-const Blog = ({ blog, handleUpdate, handleDelete, canRemove}) =>  {
+const Blog = ({ blog, handleUpdate, canRemove}) =>  {
  
 
   const [visible, setVisible] = useState(false)
@@ -10,6 +12,17 @@ const Blog = ({ blog, handleUpdate, handleDelete, canRemove}) =>  {
     //initially display none
   const showWhenVisible = { display: visible ? '' : 'none' }
 
+  const dispatch = useDispatch()
+  const blogs = useSelector(state => state.blogs)
+  const message = useSelector(state => state.notification)
+
+  const showMessage = (message) => {
+    dispatch(setNotification(message))
+    setTimeout(() => {
+      dispatch(clearNotification())
+    },5000)
+  }
+
   const blogStyle = {
     paddingTop: 10,
     paddingLeft: 2,
@@ -18,9 +31,31 @@ const Blog = ({ blog, handleUpdate, handleDelete, canRemove}) =>  {
     marginBottom: 5
   }
 
+  const handleDeleteBlog  = async (id) => {
+    if(window.confirm('Are you sure you want to delete this blog?')){
+      try{
+        dispatch(deleteBlog(id))
+
+      }catch(exception){
+      showMessage(`Only the user's creator can delete blog`)
+    }
+  }
+  }
+
   const toggleVisibility = () => {
     setVisible(!visible)
   }
+
+
+  // {blogs.
+  //   slice() // shallow copy of blogs, to not mutate the state of blogs
+  //   .sort((a,b) =>  b.likes-a.likes).map(blog =>
+  //     <Blog key={blog.id} blog={blog}
+  //      handleUpdate={() => addLikes(blog.id)} 
+  //      handleDelete = {() => handleDeleteBlog(blog.id)}
+  //      canRemove={user && blog.user.username===user.username}
+  //      />
+  //   )}
 
   return (
  <>
@@ -34,7 +69,7 @@ const Blog = ({ blog, handleUpdate, handleDelete, canRemove}) =>  {
     <p>{blog.author}</p>
    
    {canRemove && 
-   <button onClick={handleDelete}>Remove </button>
+   <button onClick={handleDeleteBlog}>Remove </button>
    }
     
 

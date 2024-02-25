@@ -4,8 +4,6 @@ import Notification from './components/Notification'
 import Togglable from './components/Togglable'
 import LoginForm from './components/LoginForm'
 import BlogForm from './components/BlogForm'
-import blogService from './services/blogs'
-import loginService from './services/login'
 import {  useDispatch, useSelector } from 'react-redux'
 import { setNotification, clearNotification } from './reducers/notificationReducer'
 import { initializeBlogs, deleteBlog, updateBlog } from './reducers/blogsReducer'
@@ -50,16 +48,7 @@ const App = () => {
    dispatch(updateBlog(id))
   }
 
-  const handleDeleteBlog  = async (id) => {
-    if(window.confirm('Are you sure you want to delete this blog?')){
-      try{
-        dispatch(deleteBlog(id))
-
-      }catch(exception){
-      showMessage(`Only the user's creator can delete blog`)
-    }
-  }
-  }
+ 
   
   const handleLogin = async (event) => {
     event.preventDefault()
@@ -119,7 +108,6 @@ const App = () => {
       .sort((a,b) =>  b.likes-a.likes).map(blog =>
         <Blog key={blog.id} blog={blog}
          handleUpdate={() => addLikes(blog.id)} 
-         handleDelete = {() => handleDeleteBlog(blog.id)}
          canRemove={user && blog.user.username===user.username}
          />
       )}
