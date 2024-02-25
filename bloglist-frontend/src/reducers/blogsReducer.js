@@ -2,6 +2,7 @@ import { createAction, createSlice } from '@reduxjs/toolkit'
 import blogsService from '../services/blogs'
 import { setNotification, clearNotification } from './notificationReducer'
 
+//state directly refers to this array of blogs.
 
 const blogsSlice = createSlice({
     name:'blogs',
@@ -12,11 +13,16 @@ const blogsSlice = createSlice({
         },
         appendBlog(state,action){
             state.push(action.payload)
+        },
+        removeBlog(state,action){
+            const id = action.payload
+            console.log('id',id)
+            return state.filter(blog => blog.id !== id )
         }
     }
 })
 
-export const {setBlogs,appendBlog} = blogsSlice.actions
+export const {setBlogs,appendBlog, removeBlog} = blogsSlice.actions
 
 export const initializeBlogs = () => {
     return async dispatch => {
@@ -33,6 +39,13 @@ export const createBlog = blog => {
       setTimeout(() => {
           dispatch(clearNotification()); 
       }, 5000);
+    }
+}
+
+export const deleteBlog = id => {
+    return async dispatch => {
+        await blogsService.deleteBlog(id)
+        dispatch(removeBlog(id))
     }
 }
 

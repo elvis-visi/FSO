@@ -8,7 +8,7 @@ import blogService from './services/blogs'
 import loginService from './services/login'
 import {  useDispatch, useSelector } from 'react-redux'
 import { setNotification, clearNotification } from './reducers/notificationReducer'
-import { initializeBlogs } from './reducers/blogsReducer'
+import { initializeBlogs, deleteBlog } from './reducers/blogsReducer'
 
 const App = () => {
   const blogs = useSelector(state => state.blogs)
@@ -43,17 +43,7 @@ const App = () => {
     }
   }, [])
 
-  const addBlog = async (blogObject) =>{
-    try{
-      blogFormRef.current.toggleVisibility()
-      const returnedBlog = await blogService.create(blogObject);
-      setBlogs(blogs.concat(returnedBlog));
-      showMessage(`a new blog ${returnedBlog.title} by ${user.name}`)
-    }catch(exception){
 
-    }
-
-  }
 
   const addLikes = async (id) => {
     //get the blog to update
@@ -70,11 +60,10 @@ const App = () => {
    
   }
 
-  const deleteBlog = async (id) => {
+  const handleDeleteBlog  = async (id) => {
     if(window.confirm('Are you sure you want to delete this blog?')){
       try{
-        await blogService.deleteBlog(id);
-        setBlogs(blogs.filter(blog => blog.id !== id))
+        dispatch(deleteBlog(id))
 
       }catch(exception){
       showMessage(`Only the user's creator can delete blog`)
@@ -151,7 +140,7 @@ const App = () => {
       .sort((a,b) =>  b.likes-a.likes).map(blog =>
         <Blog key={blog.id} blog={blog}
          handleUpdate={() => addLikes(blog.id)} 
-         handleDelete = {() => deleteBlog(blog.id)}
+         handleDelete = {() => handleDeleteBlog(blog.id)}
          canRemove={user && blog.user.username===user.username}
          />
       )}
