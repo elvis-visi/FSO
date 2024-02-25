@@ -8,7 +8,7 @@ import blogService from './services/blogs'
 import loginService from './services/login'
 import {  useDispatch, useSelector } from 'react-redux'
 import { setNotification, clearNotification } from './reducers/notificationReducer'
-import { initializeBlogs, deleteBlog } from './reducers/blogsReducer'
+import { initializeBlogs, deleteBlog, updateBlog } from './reducers/blogsReducer'
 
 const App = () => {
   const blogs = useSelector(state => state.blogs)
@@ -46,18 +46,7 @@ const App = () => {
 
 
   const addLikes = async (id) => {
-    //get the blog to update
-    const blogToUpdate = blogs.find(b => b.id === id)
-    //increase likes by 1 call update (id, newBlog)
-   
-   try{
-    const updatedBlog = await blogService.updateBlog(id, {...blogToUpdate, likes: blogToUpdate.likes + 1})
-    //update the blogs state 
-    setBlogs(blogs.map(blog => blog.id !== id ? blog : updatedBlog))
-   }catch(exception){
-
-   }
-   
+   dispatch(updateBlog(id))
   }
 
   const handleDeleteBlog  = async (id) => {
