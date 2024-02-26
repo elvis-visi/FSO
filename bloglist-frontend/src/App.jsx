@@ -4,9 +4,19 @@ import Notification from './components/Notification'
 import Togglable from './components/Togglable'
 import LoginForm from './components/LoginForm'
 import BlogForm from './components/BlogForm'
+import Users from './components/Users'
+
 import {  useDispatch, useSelector } from 'react-redux'
 import { initializeBlogs } from './reducers/blogsReducer'
 import {setUser, clearUser} from './reducers/userReducer'
+import { initializeUsers } from './reducers/usersReducer'
+
+import {
+  BrowserRouter as Router,
+  Routes, Route, Link
+} from 'react-router-dom'
+
+
 
 const App = () => {
 
@@ -16,6 +26,7 @@ const App = () => {
 
   useEffect(() => {
     dispatch(initializeBlogs())
+    dispatch(initializeUsers())
   },[])
 
   useEffect(() => {
@@ -44,18 +55,34 @@ const App = () => {
     )
   }
 
+  ///users View -> who is logged in, logout button, Users -> blogs created
+
   return (
-    <div>
-      <h2>{`${user.username} is logged in`}</h2> 
-      <button onClick={logout}>logout</button>
-      <h2>blogs</h2>
-      <Notification/>
-    
-      <Togglable buttonLabel='new blog' ref={blogFormRef}>
-      <BlogForm onBlogCreated={() => blogFormRef.current.toggleVisibility()} />
-      </Togglable>
-     <Blogs />
-    </div>
+    <Router>
+
+      <div>
+        <Link to="/users"></Link>
+        <Link to="/"></Link>
+      </div>
+
+      <div>
+
+      <Routes>
+       
+        <Route path="/users" element={<Users/>} />
+      </Routes>
+
+        <h2>{`${user.username} is logged in`}</h2> 
+        <button onClick={logout}>logout</button>
+        <h2>blogs</h2>
+        <Notification/>
+      
+        <Togglable buttonLabel='new blog' ref={blogFormRef}>
+        <BlogForm onBlogCreated={() => blogFormRef.current.toggleVisibility()} />
+        </Togglable>
+      <Blogs />
+      </div>
+    </Router>
 
   )
 }
