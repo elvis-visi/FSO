@@ -5,6 +5,7 @@ import Togglable from './components/Togglable'
 import LoginForm from './components/LoginForm'
 import BlogForm from './components/BlogForm'
 import Users from './components/Users'
+import User from './components/User'
 
 import {  useDispatch, useSelector } from 'react-redux'
 import { initializeBlogs } from './reducers/blogsReducer'
@@ -70,6 +71,7 @@ const App = () => {
       <Routes>
        
         <Route path="/users" element={<Users/>} />
+        <Route path="/users/:id" element={<User/>}   />
       </Routes>
 
         <h2>{`${user.username} is logged in`}</h2> 

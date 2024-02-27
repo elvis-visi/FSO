@@ -8,6 +8,7 @@ pass key = user.id
 */
 import User from "./User";
 import { useSelector } from "react-redux";
+import { Link } from "react-router-dom";
 
 const Users = () => {
 
@@ -23,11 +24,14 @@ const Users = () => {
                         <th>Blogs created</th>
                     </tr>
                 </thead>
+                <tbody>
                 {users.map(user => (
-                    <tbody key={user.id}> 
-                        <User user={user}/>
-                    </tbody>
+                    <tr>
+                        <td> <Link to={`/users/${user.id}`}>{user.username}</Link></td>
+                        <td>{user.blogs.length}</td>
+                    </tr>
                 ))}
+                </tbody>
             </table>
         </>
 
