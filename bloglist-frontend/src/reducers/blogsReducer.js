@@ -22,11 +22,13 @@ const blogsSlice = createSlice({
         upBlog(state,action){
             const updatedBlog = action.payload
             return state.map(b => b.id !== updatedBlog.id ? b : updatedBlog )
-        }
+        },
     }
 })
 
 export const {setBlogs,appendBlog, removeBlog, upBlog} = blogsSlice.actions
+
+
 
 export const initializeBlogs = () => {
     return async dispatch => {
@@ -64,6 +66,13 @@ export const updateBlog = id => {
     //get the returned blog(updated) from backend and update the blogs state
     dispatch(upBlog(updatedBlog))
 }
+    }
+
+    export const blogComment = (id,comment) => {
+        return async dispatch => {
+            const newBlog = await blogsService.addComment(id, comment)
+            dispatch(upBlog(newBlog))
+        }
     }
    
 

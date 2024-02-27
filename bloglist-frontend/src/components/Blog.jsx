@@ -1,6 +1,6 @@
 import { useState } from "react"
 import {  useDispatch, useSelector } from "react-redux"
-import { deleteBlog, updateBlog } from '../reducers/blogsReducer'
+import { deleteBlog, updateBlog , blogComment} from '../reducers/blogsReducer'
 import { useParams } from "react-router-dom"
 
 const Blog = () =>  {
@@ -17,6 +17,7 @@ const Blog = () =>  {
 
 
   const [visible, setVisible] = useState(false)
+  const [comment, setComment] = useState('')
 
   //initially display ''
   const hideWhenVisible = {display: visible ? 'none' : '' }
@@ -62,6 +63,12 @@ const Blog = () =>  {
     setVisible(!visible)
   }
 
+  const addComment =(event) => {
+    event.preventDefault()
+    dispatch(blogComment(id,comment))
+    setComment('')
+  }
+
   if(!blog){
     return null
   }
@@ -82,6 +89,31 @@ const Blog = () =>  {
               }
                 
               </div>   
+
+              <div>
+                 <h3>Comments</h3>
+                 <form onSubmit={addComment}>
+                  <input
+                  type="text"
+                  value={comment}
+                  onChange={({ target }) => setComment(target.value)}
+                  />
+                  <button type="submit">add comment</button>
+                 </form>
+                <ul>
+                {blog.comments
+                .map((com,index) => {
+                  return (
+                    <li key={index}>
+                      {com}
+                    </li>
+                  )
+                })
+                
+                }
+                </ul>
+             
+              </div>
     
  </>
  

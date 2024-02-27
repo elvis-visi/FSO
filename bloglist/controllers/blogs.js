@@ -32,7 +32,7 @@ blogsRouter.get('/', async (request, response) => {
     author: body.author,
     url: body.url,
     likes: body.likes,
-    user  :user.id
+    user  :user.id,
     })
   
       try{
@@ -71,6 +71,17 @@ blogsRouter.get('/', async (request, response) => {
       next(exception);
     }
   });
+
+  blogsRouter.post(`/:id/comments`, async (request, response) => {
+    const {comment} = request.body
+    const blog = await Blog.findById(request.params.id)
+
+    blog.comments = blog.comments.concat(comment)
+    await blog.save()
+
+    response.json(blog)
+  
+  })
   
 
   blogsRouter.put('/:id', userExtractor, async (request,response,next) => {
