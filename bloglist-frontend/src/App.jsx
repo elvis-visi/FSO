@@ -6,6 +6,7 @@ import LoginForm from './components/LoginForm'
 import BlogForm from './components/BlogForm'
 import Users from './components/Users'
 import User from './components/User'
+import Blog from './components/Blog'
 
 import {  useDispatch, useSelector } from 'react-redux'
 import { initializeBlogs } from './reducers/blogsReducer'
@@ -57,32 +58,38 @@ const App = () => {
   }
 
   ///users View -> who is logged in, logout button, Users -> blogs created
-
+  const padding = {
+    padding: 5
+  }
   return (
     <Router>
 
       <div>
-        <Link to="/users"></Link>
-        <Link to="/"></Link>
+      <span style={padding}><strong>Blog app</strong></span>
+        <Link style={padding} to="/">blogs</Link>
+        <Link style={padding} to="/users">users</Link>
+        <span style={padding}>{user.name} logged in</span>
+        <span style={padding}>
+        <button onClick={logout}>logout</button>
+        </span>
       </div>
+
+      <Notification/>
 
       <div>
 
       <Routes>
-       
         <Route path="/users" element={<Users/>} />
         <Route path="/users/:id" element={<User/>}   />
+        <Route path="/" element={<Blogs/>} />
+        <Route path="/blogs/:id" element={<Blog/>} />
       </Routes>
-
-        <h2>{`${user.username} is logged in`}</h2> 
-        <button onClick={logout}>logout</button>
-        <h2>blogs</h2>
-        <Notification/>
       
+        
         <Togglable buttonLabel='new blog' ref={blogFormRef}>
         <BlogForm onBlogCreated={() => blogFormRef.current.toggleVisibility()} />
         </Togglable>
-      <Blogs />
+   
       </div>
     </Router>
 

@@ -1,5 +1,8 @@
 import { useSelector } from 'react-redux'
-import Blog from './Blog'
+import { Link } from 'react-router-dom'
+
+//add a parameterized link for each blog
+
 
 const Blogs = () => {
     const blogs = useSelector(state => state.blogs)
@@ -8,9 +11,12 @@ const Blogs = () => {
             {blogs.
         slice() // shallow copy of blogs, to not mutate the state of blogs
         .sort((a,b) =>  b.likes-a.likes)
-        .map(blog => {
-           return <Blog key={blog.id} blog={blog}/>
-        }
+        .map(blog => 
+         <div key={blog.id}>
+            <Link to={`/blogs/${blog.id}`} >{blog.title}</Link> 
+         </div>
+        
+        
         )}
         </div>
       )

@@ -1,9 +1,20 @@
 import { useState } from "react"
 import {  useDispatch, useSelector } from "react-redux"
-import { initializeBlogs, deleteBlog, updateBlog } from '../reducers/blogsReducer'
+import { deleteBlog, updateBlog } from '../reducers/blogsReducer'
+import { useParams } from "react-router-dom"
 
-const Blog = ({blog}) =>  {
+const Blog = () =>  {
  
+
+  //get the blogs useSelector
+  // useParams -> get the id pass in the parameterized path
+  //find the blog corresponding to the id
+  //display info about the blog
+  const blogs = useSelector(state => state.blogs)
+  const id = useParams().id
+  console.log('params Blog', id )
+  const blog = blogs.find(b => b.id === id)
+
 
   const [visible, setVisible] = useState(false)
 
@@ -49,6 +60,10 @@ const Blog = ({blog}) =>  {
 
   const toggleVisibility = () => {
     setVisible(!visible)
+  }
+
+  if(!blog){
+    return null
   }
 
   return (
