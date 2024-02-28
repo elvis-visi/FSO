@@ -47,13 +47,13 @@ const App = () => {
 
   if(user === null) {
     return (
-      <>
+      <div className="container">
       <h2>log in to application</h2>
       <Notification/>
       <Togglable buttonLabel='login'>
         <LoginForm />
       </Togglable>
-      </>
+      </div>
     )
   }
 
@@ -63,7 +63,7 @@ const App = () => {
   }
   return (
     <Router>
-
+ <div className="container">
       <div>
         <Link style={padding} to="/">blogs</Link>
         <Link style={padding} to="/users">users</Link>
@@ -90,6 +90,7 @@ const App = () => {
         <BlogForm onBlogCreated={() => blogFormRef.current.toggleVisibility()} />
         </Togglable>
    
+      </div>
       </div>
     </Router>
 

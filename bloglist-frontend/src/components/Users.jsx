@@ -6,7 +6,7 @@ forEach user -> return <User />>
 pass key = user.id
 
 */
-import User from "./User";
+import {Table} from 'react-bootstrap'
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 
@@ -17,7 +17,7 @@ const Users = () => {
     return(
         <>
        <h2>Users</h2>
-            <table>
+            <Table striped>
                 <thead>
                     <tr>
                         <th>User</th>
@@ -32,7 +32,7 @@ const Users = () => {
                     </tr>
                 ))}
                 </tbody>
-            </table>
+            </Table>
         </>
 
      
