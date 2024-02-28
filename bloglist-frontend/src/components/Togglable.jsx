@@ -1,5 +1,5 @@
 import { useState, forwardRef, useImperativeHandle } from 'react'
-
+import {  Button } from 'react-bootstrap'
 const Togglable = forwardRef ((props, refs) => {
 
 //set the visibility of the child component
@@ -27,7 +27,9 @@ const toggleVisibility = () => {
         </div>
         <div style={showWhenVisible}>
         {props.children}
-        <button onClick={toggleVisibility}>cancel</button>
+        <Button onClick={toggleVisibility} variant="primary">
+        cancel
+        </Button>
       </div>
 
     </div>
