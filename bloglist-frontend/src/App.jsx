@@ -65,14 +65,14 @@ const App = () => {
     <Router>
 
       <div>
-      <span style={padding}><strong>Blog app</strong></span>
         <Link style={padding} to="/">blogs</Link>
         <Link style={padding} to="/users">users</Link>
-        <span style={padding}>{user.name} logged in</span>
         <span style={padding}>
         <button onClick={logout}>logout</button>
         </span>
       </div>
+      <div style={padding}><strong>Blog app</strong></div>
+      <div style={padding}>{user.name} logged in</div>
 
       <Notification/>
 
