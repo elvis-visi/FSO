@@ -37,7 +37,7 @@ Note.init({
   modelName: 'note'
 })
 
-
+Note.sync()
 
 
 
