@@ -5,7 +5,13 @@ const { Note, User } = require('../models')
 const {SECRET} = require('../util/config')
 
 router.get('/', async (req, res) => {
-  const notes = await Note.findAll()
+  const notes = await Note.findAll({
+    attributes: { exclude: ['userId'] },
+    include: {
+      model: User,
+      attributes: ['name']
+    }
+  })
   res.json(notes)
 })
 

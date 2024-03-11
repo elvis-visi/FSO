@@ -3,6 +3,7 @@ import { useDispatch } from "react-redux"
 import { setNotification, clearNotification } from "../reducers/notificationReducer"
 import { loginIn } from "../reducers/userReducer"
 import { Table, Form, Button } from 'react-bootstrap'
+import {useNavigate} from 'react-router-dom'
 
 const LoginForm = () => {
 
@@ -10,12 +11,14 @@ const LoginForm = () => {
         const [password,setPassword] = useState('')
 
         const dispatch = useDispatch()
+        const navigate = useNavigate()
 
         const showMessage = (message) => {
             dispatch(setNotification(message))
             setTimeout(() => {
             dispatch(clearNotification())
             },5000)
+            navigate('/')
         }
 
         const handleLogin = async (event) => {
@@ -24,7 +27,7 @@ const LoginForm = () => {
               dispatch(loginIn({username,password}))
                 setUserName('')
                 setPassword('')
-        
+                navigate('/')
             }catch(exception){
               showMessage('Wrong credentials')
             }
