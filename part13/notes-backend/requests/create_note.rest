@@ -1,8 +1,10 @@
 POST http://localhost:3001/api/notes
 Content-Type: application/json
+Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InNlY3JldCIsImlkIjo1LCJpYXQiOjE3MTAxNDk0MTR9.vtyoHTrrmdnum9IfpnGKuOx0EbrDLicAMz1JWD2rlmQ
+
 
 
 {
-  "content": "1-M again",
+  "content": "only logged in usere",
   "important": true
 }
