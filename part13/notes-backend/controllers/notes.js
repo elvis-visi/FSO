@@ -6,11 +6,17 @@ const { Note, User } = require('../models')
 const {SECRET} = require('../util/config')
 
 router.get('/', async (req, res) => {
-  let important = {
-    [Op.in]: [true, false]
+  const where = {}
+  console.log(`req.query `, req.query)
+
+  if (req.query.important) {
+    where.important = req.query.important === "true"
   }
-  if ( req.query.important ) {
-    important = req.query.important === "true"
+
+  if (req.query.search) {
+    where.content = {
+      [Op.substring]: req.query.search
+    }
   }
 
   const notes = await Note.findAll({
@@ -19,10 +25,9 @@ router.get('/', async (req, res) => {
       model: User,
       attributes: ['name']
     },
-    where: {
-      important
-    }
+    where
   })
+
   res.json(notes)
 })
 
