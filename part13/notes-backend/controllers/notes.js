@@ -2,6 +2,7 @@ const router = require('express').Router()
 const jwt = require('jsonwebtoken')
 const { Op } = require('sequelize')
 
+const { tokenExtractor } = require('../util/middleware')
 const { Note, User } = require('../models')
 const {SECRET} = require('../util/config')
 
@@ -30,29 +31,6 @@ router.get('/', async (req, res) => {
 
   res.json(notes)
 })
-
-
-//  token extractor -> token will be sent in the authorization header 
-// of the post request, we need to get the token from the request.headers
-// verify it using jwt and the secret
-const tokenExtractor = (req, res, next) => {
-  console.log(`req authorization`, req.get('authorization'))
-  const authorization = req.get('authorization')
-  if (authorization && authorization.toLowerCase().startsWith('bearer ')) {
-    try {
-      console.log(authorization.substring(7))
-      console.log(SECRET)
-      req.decodedToken = jwt.verify(authorization.substring(7), SECRET)
-    } catch (error) {
-      console.log(error)
-      return res.status(401).json({ error: 'token invalid' })
-    }
-  } else {
-    return res.status(401).json({ error: 'token missing' })
-  }
-
-  next()
-}
 
 router.post('/',tokenExtractor, async (req, res) => {
   try {
