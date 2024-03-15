@@ -1,10 +1,10 @@
 POST http://localhost:3001/api/notes
 Content-Type: application/json
-Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Im1sdXVra2FpIiwiaWQiOjMsImlhdCI6MTcxMDMyNzc4OH0.IqndwT8WES1ekAP1vzpGM-v8saaGoIUpBqS4FCGPjfk
+Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Imx5bngiLCJpZCI6MSwiaWF0IjoxNzEwNDk1Mjg4fQ.1cHQCtZ4wW2_pNNPcDDu5LUEs7bbiqhwQv-wdkyty4w
 
 
 
 {
-  "content": "another note",
+  "content": "lynx first note",
   "important": true
 }
