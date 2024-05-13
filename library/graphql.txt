@@ -1,0 +1,32 @@
+GraphQL query language is basically about selecting fields on objects
+
+the shape of the graphql query closely resembles the data that is returned
+we can have an idea what will be returned
+but it would be great to know what is the exact description of the data
+here is where the schema comes in place-< exact description of the data that we will query.   
+
+
+schema -> set of types which describe the set of possible data you can query
+when the queries come in, they get validated and executed against the schema
+
+
+
+object types and fields
+object which you can fetch
+
+query and mutation same as object type, except that they serve as entry to the service. 
+
+scalar type- the leaves of the query -> leaves don't have any sub-fields
+
+what queries the client can send to the server, what kind of parameters the queries can have, and what kind of data the queries return.
+ 
+
+ Because the query returns a list of Person objects, the query must describe which fields of the objects the query returns
+
+
+
+//library
+
+
+
+
