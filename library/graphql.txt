@@ -28,5 +28,36 @@ what queries the client can send to the server, what kind of parameters the quer
 //library
 
 
+args is an object that contains all the arguments passed to the addBook mutation.
+addBook: (root,args) => {
+      const newBook = {...args, id: uuidv4()}
 
+...
+}
 
+For the given mutation:
+
+graphql
+
+mutation {
+  addBook(
+    title: "NoSQL Distilled",
+    author: "Martin Fowler",
+    published: 2012,
+    genres: ["database", "nosql"]
+  ) {
+    title,
+    author
+  }
+}
+
+The args object would look like this:
+
+{
+  title: "NoSQL Distilled",
+  author: "Martin Fowler",
+  published: 2012,
+  genres: ["database", "nosql"]
+}
+
+The spread operator ...args takes all key-value pairs from the args object and includes them in the newBook object.
